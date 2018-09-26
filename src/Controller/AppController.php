@@ -39,10 +39,13 @@ class AppController extends Controller
      * @return void
      */
 
+
     public function initialize()
     {
         // Existing code
+        parent:: initialize();
 
+        $this->loadComponent('Flash');
 
         $this->loadComponent('Auth', [
             'authenticate' => [
@@ -54,7 +57,7 @@ class AppController extends Controller
                 ]
             ],
             'loginAction' => [
-                'controller' => 'Users',
+                'controller' => 'Sesion',
                 'action' => 'login'
             ],
             //use isAuthorized in Controllers
@@ -65,6 +68,15 @@ class AppController extends Controller
 
         // Allow the display action so our PagesController
         // continues to work. Also enable the read only actions.
+
+
         $this->Auth->allow(['display', 'view', 'index']);
     }
+
+    public function isAuthorized($user){
+        return true;
+    }
+
+
 }
+
