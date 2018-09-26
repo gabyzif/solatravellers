@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+
 /**
  * Users Controller
  *
@@ -19,6 +20,11 @@ class SesionController extends AppController
      * @return \Cake\Http\Response|void
      */
 
+    public function view()
+    {
+        $this->viewBuilder()->setLayout('sesion');
+
+    }
 
     public function login()
     {
