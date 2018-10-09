@@ -2,7 +2,7 @@
 <!-- This is the first modal -->
 <div class="reveal callout" id="loginModal" data-reveal>
 
-    <form class="text-center login">
+    <?= $this->Form->create(null, ['url' => ['controller' => 'Sesion', 'action' => 'login'], 'class' => 'text-center login']) ?>
         <h2>Log in Solatravellers</h2>
 
         <div class="floated-label-wrapper">
@@ -26,7 +26,8 @@
             </div>
             <input class="button expanded green" type="submit" value="Send">
         </div>
-    </form>
+
+    <?= $this->Form->end() ?>
     <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
         <span aria-hidden="true">&times;</span>
     </button>

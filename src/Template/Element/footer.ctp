@@ -3,7 +3,7 @@
 <div class="main">
     <footer class="social-footer vertical medium-horizontal menu">
         <div class="social-footer-left">
-            <li class="logo-nav"><a href="#"><img src="images/logo.png"/></a></li>
+            <li class="logo-nav"><a href="#"><img src="/images/logo.png"/></a></li>
             <li><a href="#"> About us </a></li>
             <li><a href="#">Safety</a></li>
             <li><a href="#">Blog</a></li>
