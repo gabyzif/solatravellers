@@ -5,9 +5,15 @@
 
     <?= $this->Form->create($user, ['class' => 'text-center register']) ?>
 
-        <?php
 
-        echo $this->Form->control('name',['placeholder'=>'Name', 'label'=>false]);
+
+        <div class="floated-label-wrapper">
+            <label for="full-name">Full name</label>
+            <?= $this->Form->control('name', ['placeholder'=>'Name', 'label' => false]) ?>
+        </div>
+    <?php
+
+        echo $this->Form->control('name',['placeholder'=>'Name', 'label'=>false, 'class' => 'floated-label-wrapper']);
         echo $this->Form->control('surname',['placeholder' => 'Last name','label'=>false]);
         echo $this->Form->control('password',['placeholder' => 'Pass','label'=>false]);
         echo $this->Form->control('email',['placeholder' => 'Email','label'=>false]);
