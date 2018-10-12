@@ -8,6 +8,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List User Groups'), ['controller' => 'UserGroups', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New User Group'), ['controller' => 'UserGroups', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="users index large-9 medium-8 columns content">
@@ -16,13 +18,13 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('idNacionalidad') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('idPhoto') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nacionality_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('photo_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('surname') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('idTypeOfAccount') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('type_of_account_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('dateOfBirth') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -31,13 +33,13 @@
             <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= $this->Number->format($user->id) ?></td>
-                <td><?= $this->Number->format($user->idNacionalidad) ?></td>
-                <td><?= $this->Number->format($user->idPhoto) ?></td>
+                <td><?= $this->Number->format($user->nacionality_id) ?></td>
+                <td><?= $this->Number->format($user->photo_id) ?></td>
                 <td><?= h($user->name) ?></td>
                 <td><?= h($user->surname) ?></td>
                 <td><?= h($user->password) ?></td>
                 <td><?= h($user->email) ?></td>
-                <td><?= $this->Number->format($user->idTypeOfAccount) ?></td>
+                <td><?= $this->Number->format($user->type_of_account_id) ?></td>
                 <td><?= h($user->dateOfBirth) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>

@@ -56,7 +56,7 @@ $('.slider').on('changed.zf.slider', function() {
 
 
 
-    $("#level").attr("src","etc/images/"+finaLevel+".png");
+    $("#level").attr("src","../../webroot/images/"+finaLevel+".png");
     $("#plevel").html(finaLevel);
 
 

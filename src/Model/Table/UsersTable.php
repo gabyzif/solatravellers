@@ -9,6 +9,13 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property |\Cake\ORM\Association\BelongsTo $Nacionalities
+ * @property |\Cake\ORM\Association\BelongsTo $Photos
+ * @property |\Cake\ORM\Association\BelongsTo $TypeOfAccounts
+ * @property |\Cake\ORM\Association\HasMany $Comments
+ * @property |\Cake\ORM\Association\HasMany $Publications
+ * @property \App\Model\Table\UserGroupsTable|\Cake\ORM\Association\HasMany $UserGroups
+ *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -34,6 +41,28 @@ class UsersTable extends Table
         $this->setTable('users');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Nacionalities', [
+            'foreignKey' => 'nacionality_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Photos', [
+            'foreignKey' => 'photo_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('TypeOfAccounts', [
+            'foreignKey' => 'type_of_account_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Comments', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Publications', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('UserGroups', [
+            'foreignKey' => 'user_id'
+        ]);
     }
 
     /**
@@ -47,16 +76,6 @@ class UsersTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
-
-        $validator
-            ->integer('idNacionalidad')
-            ->requirePresence('idNacionalidad', 'create')
-            ->notEmpty('idNacionalidad');
-
-        $validator
-            ->integer('idPhoto')
-            ->requirePresence('idPhoto', 'create')
-            ->notEmpty('idPhoto');
 
         $validator
             ->scalar('name')
@@ -82,11 +101,6 @@ class UsersTable extends Table
             ->notEmpty('email');
 
         $validator
-            ->integer('idTypeOfAccount')
-            ->requirePresence('idTypeOfAccount', 'create')
-            ->notEmpty('idTypeOfAccount');
-
-        $validator
             ->date('dateOfBirth')
             ->allowEmpty('dateOfBirth');
 
@@ -103,6 +117,9 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->existsIn(['nacionality_id'], 'Nacionalities'));
+        $rules->add($rules->existsIn(['photo_id'], 'Photos'));
+        $rules->add($rules->existsIn(['type_of_account_id'], 'TypeOfAccounts'));
 
         return $rules;
     }
