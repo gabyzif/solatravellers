@@ -79,7 +79,7 @@ class AppController extends Controller
         // continues to work. Also enable the read only actions.
 
 
-        $this->Auth->allow(['register','display', 'view', 'index']);
+        $this->Auth->allow(['register','display', 'view', 'index','add']);
     }
 
     public function beforeFilter(Event $event)

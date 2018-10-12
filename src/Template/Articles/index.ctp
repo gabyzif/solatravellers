@@ -10,18 +10,21 @@
         <li><?= $this->Html->link(__('New Article'), ['action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="articles index large-9 medium-8 columns content">
-    <h3><?= __('Articles') ?></h3>
+
+
+
+
+
+    <h3><?= __('Blog') ?></h3>
     <div class="responsive-blog-post">
 
 
             <?php foreach ($articles as $article): ?>
-
                 <div class="individual-post">
                     <h2><?= $article->title ?></h2>
                     <p class="date"><?= $article->created ?></p>
-                    <?php if(isset($article->photo)): ?>
-                        <img src="/img/Article/photo/<?= $article->photo ?>">
+                    <?php if(isset($article->photos[0])): ?>
+                        <img src="/images/Photos/url/<?= $article->photos[0]->url ?>">
                     <?php else: ?>
                         <img src="https://placehold.it/1200x650">
                     <?php endif; ?>
@@ -42,4 +45,4 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div>
+

@@ -41,6 +41,12 @@ class PhotosTable extends Table
             'foreignKey' => 'article_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->addBehavior('Josegonzalez/Upload.Upload', [
+            'url' => [
+                'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}'
+            ]
+        ]);
     }
 
     /**
@@ -56,9 +62,7 @@ class PhotosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('url')
             ->maxLength('url', 200)
-            ->requirePresence('url', 'create')
             ->notEmpty('url');
 
         return $validator;

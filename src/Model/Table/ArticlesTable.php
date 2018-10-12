@@ -74,9 +74,9 @@ class ArticlesTable extends Table
             ->notEmpty('description');
 
         $validator
-            ->integer('category')
-            ->requirePresence('category', 'create')
-            ->notEmpty('category');
+            ->integer('category');
+            //->requirePresence('category', 'create')
+            //->notEmpty('category');
 
         $validator
             ->boolean('active')
