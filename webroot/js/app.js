@@ -63,3 +63,7 @@ $('.slider').on('changed.zf.slider', function() {
     // console.log(level);
    // level.innerHTML=finaLevel;
 });
+
+function hidetext(){
+
+}
