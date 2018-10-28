@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\TgroupsTable;
+use App\Model\Table\EventsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\TgroupsTable Test Case
+ * App\Model\Table\EventsTable Test Case
  */
-class TgroupsTableTest extends TestCase
+class EventsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\TgroupsTable
+     * @var \App\Model\Table\EventsTable
      */
-    public $Tgroups;
+    public $Events;
 
     /**
      * Fixtures
@@ -24,8 +24,9 @@ class TgroupsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.tgroups',
-        'app.user_groups'
+        'app.events',
+        'app.photos',
+        'app.users'
     ];
 
     /**
@@ -36,8 +37,8 @@ class TgroupsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Tgroups') ? [] : ['className' => TgroupsTable::class];
-        $this->Tgroups = TableRegistry::getTableLocator()->get('Tgroups', $config);
+        $config = TableRegistry::getTableLocator()->exists('Events') ? [] : ['className' => EventsTable::class];
+        $this->Events = TableRegistry::getTableLocator()->get('Events', $config);
     }
 
     /**
@@ -47,7 +48,7 @@ class TgroupsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Tgroups);
+        unset($this->Events);
 
         parent::tearDown();
     }
@@ -68,6 +69,16 @@ class TgroupsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -10,10 +10,10 @@
         <li><?= $this->Html->link(__('List Tgroups'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
-<div class="tgroups form large-9 medium-8 columns content">
+<div class="articles form large-9 medium-8 columns content">
     <?= $this->Form->create($tgroup) ?>
     <fieldset>
-        <legend><?= __('Add Tgroup') ?></legend>
+        <legend><?= __('Add Group') ?></legend>
         <?php
             echo $this->Form->control('name');
             echo $this->Form->control('description');
