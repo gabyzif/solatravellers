@@ -44,7 +44,8 @@ class TgroupsController extends AppController
 
 
         $tgroups = $this->paginate($this->Tgroups->find()
-            ->contain(['UserGroups']));
+            ->contain(['UserGroups'])
+            ->contain(['Photos']));
 
 
 
@@ -123,11 +124,55 @@ class TgroupsController extends AppController
      */
     public function view($id = null)
     {
-        $tgroup = $this->Tgroups->get($id, [
-            'contain' => []
+        $this->loadModel('Publications');
+        $this->loadModel('UserGroups');
+        $this->loadModel('Photos');
+        $this->loadModel('Users');
+
+
+
+        $is_in_group=false;
+
+
+
+        $tgroup = $this->Tgroups->get($id,[
+            'contain' => ['UserGroups', 'Photos']
+
         ]);
 
-        $this->set('tgroup', $tgroup);
+        $cant_users = $this->UserGroups->find()
+            ->where(['group_id' => $tgroup->id])
+            ->count();
+
+        $conversations = $this->Publications->find()
+            ->contain("Tgroups")
+            ->contain("Users")
+            ->where(["Publications.tgroup_id" => $id]);
+
+        $users_group = $this->UserGroups->find()
+            ->contain (["Users"=>"Photos"])
+            ->where(['group_id' => $tgroup->id]);
+
+
+
+
+
+        foreach ($tgroup->user_groups as $user_gr){
+
+            if($user_gr->user_id==$this->User->id){
+             $is_in_group=true;
+
+
+            }
+
+
+        }
+
+
+
+
+
+        $this->set(compact('tgroup', 'conversations', 'cant_users','is_in_group', 'users', 'users_group'));
     }
 
     /**
@@ -150,6 +195,68 @@ class TgroupsController extends AppController
         $this->set(compact('tgroup'));
     }
 
+   
+
+
+    public function joinGroup($group_id){
+
+
+        $userGroup = $this->UserGroups->newEntity();
+
+        if ($this->request->is('get')) {
+            $userGroup = $this->UserGroups->patchEntity($userGroup, $this->request->getData());
+            if ($this->UserGroups->save($userGroup)) {
+                $this->Flash->success(__('The user group has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The user group could not be saved. Please, try again.'));
+        }
+        $users = $this->UserGroups->Users->find('list', ['limit' => 200]);
+        $tgroups = $this->UserGroups->Tgroups->find('list', ['limit' => 200]);
+        $this->set(compact('userGroup', 'users', 'tgroups'));
+
+    }
+    public function newconv()
+    {
+        $this->loadModel('Publications');
+        $this->loadModel('UserGroups');
+        $this->loadModel('Photos');
+        $this->loadModel('Users');
+        $this->loadModel('TypeOfPublications');
+
+
+
+
+
+        $publication = $this->Publications->newEntity();
+        if ($this->request->is('post'))
+        {
+            $publication = $this->Publications->patchEntity($publication, $this->request->getData());
+
+            /*echo "<pre>";
+            var_dump($publication);
+            echo "</pre>";*/
+
+            if ($this->Publications->save($publication)) {
+                $this->Flash->success(__('The publication has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $this->Flash->error(__('The publication could not be saved. Please, try again.'));
+        }
+
+
+
+        $id_user = $this->User->id;
+
+
+        $tgroups = $this->Publications->Tgroups->find('list', ['limit' => 200]);
+
+        $this->set(compact('publication',  'id_user', 'tgroups'));
+    }
+
     /**
      * Edit method
      *
@@ -157,6 +264,8 @@ class TgroupsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
+
+
     public function edit($id = null)
     {
         $tgroup = $this->Tgroups->get($id, [

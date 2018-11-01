@@ -2,10 +2,10 @@
 <div class="main" id="animated-menu" data-animate="hinge-in-from-top spin-out">
     <nav class="hover-underline-menu data-menu-underline-from-center">
         <ul class="menu align-center">
-            <li class="logo-nav"><a href="#"><img src="/images/logo.png"/></a></li>
-            <li><a href="#">Community </a></li>
-            <li><a href="#">Events</a></li>
-            <li><a href="#">Blog</a></li>
+            <li class="logo-nav"><a href="/pages"><img src="/images/logo.png"/></a></li>
+            <li><a href="/tgroups">Community </a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/articles">Blog</a></li>
             <?php if(!isset($User)): ?>
                 <!--            <li><a data-open="loginModal" href="/sesion/login">Log in</a></li>-->
             <li><a href="/sesion/login">Log in</a></li>

@@ -3,29 +3,32 @@
 
 
 
-    <?= $this->Form->create($user, ['class' => 'text-center register']) ?>
+    <?= $this->Form->create($user, ['type'=> 'file', 'class' => 'text-center register']) ?>
 
 
-
-        <div class="floated-label-wrapper">
-            <label for="full-name">Full name</label>
-            <?= $this->Form->control('name', ['placeholder'=>'Name', 'label' => false]) ?>
-        </div>
     <?php
 
         echo $this->Form->control('name',['placeholder'=>'Name', 'label'=>false, 'class' => 'floated-label-wrapper']);
         echo $this->Form->control('surname',['placeholder' => 'Last name','label'=>false]);
         echo $this->Form->control('password',['placeholder' => 'Pass','label'=>false]);
         echo $this->Form->control('email',['placeholder' => 'Email','label'=>false]);
-        echo $this->Form->control('idNacionalidad', ['placeholder' => 'Nacionality','label'=>false]);
-        echo $this->Form->control('idTypeOfAccount',['placeholder' => 'Account','label'=>false]);
-        echo $this->Form->control('dateOfBirth',['placeholder' => 'Date of Birth','label'=>false]);
+        echo $this->Form->control('nacionality_id', ['options' => $nacionality,'label'=>false]);
+        //echo  $this->Form->control('type_of_account_id', ['options' => $typeOfAccount,'label'=>false]);
+        echo $this->Form->control('dateOfBirth',array(
+            'label' => false,
+            'dateFormat' => 'DMY',
+            'minYear' => date('Y') - 70,
+            'maxYear' => date('Y') - 18 ));
+
+        echo $this->Form->control('photo_url', array (
+
+                'type'=>'file',
+                'label'=>false
+        ));
 
         ?>
 
     <input class="button expanded green-pink" type="submit" value="Sign up">
-    <input class="button expanded green" type="submit" value="Sign up with Facebook">
-
     <p>Do you have an account? <a>Sing in</a></p>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>

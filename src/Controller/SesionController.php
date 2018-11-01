@@ -38,22 +38,31 @@ class SesionController extends AppController
     public function register()
     {
         $this->loadModel('Users');
+        $this->loadModel('typeOfAccount');
+
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             // Prior to 3.4.0 $this->request->data() was used.
             $user = $this->Users->patchEntity($user, $this->request->getData());
 
-            echo '<pre>';
-            var_dump($user);
-            echo '</pre>';
+            $user->type_of_account_id=1;
 
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'register']);
+                return $this->redirect($this->Auth->redirectUrl());
             }
+
+            echo "<pre>";
+            var_dump($user);
+            echo "</pre>";
             $this->Flash->error(__('Unable to add the user.'));
         }
-        $this->set('user', $user);
+
+       // $typeOfAccount = $this->Users->TypeOfAccounts->find('list',['valueField' => 'type'] );
+        $nacionality = $this->Users->Nacionalities->find('list', [    'valueField' => 'description'
+        ]);
+
+        $this->set(compact('user','nacionality','typeOfAccount'));
     }
 
     public function initialize()

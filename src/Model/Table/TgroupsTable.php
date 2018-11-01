@@ -9,6 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Tgroups Model
  *
+ * @property |\Cake\ORM\Association\BelongsTo $Photos
+ * @property |\Cake\ORM\Association\HasMany $Publications
+ *
  * @method \App\Model\Entity\Tgroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tgroup newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Tgroup[] newEntities(array $data, array $options = [])
@@ -34,6 +37,13 @@ class TgroupsTable extends Table
         $this->setTable('tgroups');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Photos', [
+            'foreignKey' => 'photo_id'
+        ]);
+        $this->hasMany('Publications', [
+            'foreignKey' => 'tgroup_id'
+        ]);
 
         $this->hasMany('UserGroups', [
             'foreignKey' => 'group_id'
@@ -66,5 +76,19 @@ class TgroupsTable extends Table
             ->notEmpty('description');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['photo_id'], 'Photos'));
+
+        return $rules;
     }
 }

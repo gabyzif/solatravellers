@@ -9,6 +9,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $name
  * @property string $description
+ * @property int $photo_id
+ *
+ * @property \App\Model\Entity\UserGroup[] $user_groups
  */
 class Tgroup extends Entity
 {
@@ -24,6 +27,8 @@ class Tgroup extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'description' => true
+        'description' => true,
+        'photo_id' => true,
+        'user_groups' => true
     ];
 }

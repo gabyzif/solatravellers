@@ -9,12 +9,12 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Nacionalities
- * @property |\Cake\ORM\Association\BelongsTo $Photos
- * @property |\Cake\ORM\Association\BelongsTo $TypeOfAccounts
- * @property |\Cake\ORM\Association\HasMany $Comments
- * @property |\Cake\ORM\Association\HasMany $Publications
+ * @property \App\Model\Table\NacionalitiesTable|\Cake\ORM\Association\BelongsTo $Nacionalities
+ * @property \App\Model\Table\TypeOfAccountsTable|\Cake\ORM\Association\BelongsTo $TypeOfAccounts
+ * @property \App\Model\Table\CommentsTable|\Cake\ORM\Association\HasMany $Comments
+ * @property \App\Model\Table\PublicationsTable|\Cake\ORM\Association\HasMany $Publications
  * @property \App\Model\Table\UserGroupsTable|\Cake\ORM\Association\HasMany $UserGroups
+ * @property |\Cake\ORM\Association\BelongsToMany $Events
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -46,10 +46,6 @@ class UsersTable extends Table
             'foreignKey' => 'nacionality_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Photos', [
-            'foreignKey' => 'photo_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('TypeOfAccounts', [
             'foreignKey' => 'type_of_account_id',
             'joinType' => 'INNER'
@@ -62,6 +58,59 @@ class UsersTable extends Table
         ]);
         $this->hasMany('UserGroups', [
             'foreignKey' => 'user_id'
+        ]);
+        $this->belongsToMany('Events', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'event_id',
+            'joinTable' => 'users_events'
+        ]);
+
+        $this->addBehavior('Josegonzalez/Upload.Upload', [
+            'url' => [
+                'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}'
+            ],
+            'photo' => [
+                'fields' => [
+                    'dir' => 'photo_dir',
+                    'size' => 'photo_size',
+                    'type' => 'photo_type'
+                ],
+                'nameCallback' => function ($table, $entity, $data, $field, $settings) {
+                    return strtolower($data['name']);
+                },
+                'transformer' =>  function ($table, $entity, $data, $field, $settings) {
+                    $extension = pathinfo($data['name'], PATHINFO_EXTENSION);
+
+                    // Store the thumbnail in a temporary file
+                    $tmp = tempnam(sys_get_temp_dir(), 'upload') . '.' . $extension;
+
+                    // Use the Imagine library to DO THE THING
+                    $size = new \Imagine\Image\Box(40, 40);
+                    $mode = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;
+                    $imagine = new \Imagine\Gd\Imagine();
+
+                    // Save that modified file to our temp file
+                    $imagine->open($data['tmp_name'])
+                        ->thumbnail($size, $mode)
+                        ->save($tmp);
+
+                    // Now return the original *and* the thumbnail
+                    return [
+                        $data['tmp_name'] => $data['name'],
+                        $tmp => 'thumbnail-' . $data['name'],
+                    ];
+                },
+                'deleteCallback' => function ($path, $entity, $field, $settings) {
+                    // When deleting the entity, both the original and the thumbnail will be removed
+                    // when keepFilesOnDelete is set to false
+                    return [
+                        $path . $entity->{$field},
+                        $path . 'thumbnail-' . $entity->{$field}
+                    ];
+                },
+                'keepFilesOnDelete' => false
+            ]
+
         ]);
     }
 
@@ -76,6 +125,12 @@ class UsersTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+
+        $validator
+            ->scalar('photo_url')
+            ->maxLength('photo_url', 255)
+            ->requirePresence('photo_url', 'create')
+            ->notEmpty('photo_url');
 
         $validator
             ->scalar('name')
@@ -118,7 +173,6 @@ class UsersTable extends Table
     {
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['nacionality_id'], 'Nacionalities'));
-        $rules->add($rules->existsIn(['photo_id'], 'Photos'));
         $rules->add($rules->existsIn(['type_of_account_id'], 'TypeOfAccounts'));
 
         return $rules;

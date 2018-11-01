@@ -33,6 +33,8 @@ class ErrorController extends AppController
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);
+
+
     }
 
     /**
@@ -43,6 +45,7 @@ class ErrorController extends AppController
      */
     public function beforeFilter(Event $event)
     {
+
     }
 
     /**

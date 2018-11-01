@@ -10,7 +10,7 @@
 ?>
 <div class="cell medium-6 large-4">
     <div class="big-div left-div btn">
-        <button class="button expanded light-pink ">New group</button>
+        <button class="button expanded light-pink "  onclick="window.location.href='<?= $this->Url->build(['action' => 'add' ]) ?>'">New group</button>
     </div>
 
     <div class="big-div left-div">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="big-div left-div btn">
-        <button class="button expanded light-pink ">New Converesation</button>
+        <button class="button expanded light-pink " onclick="window.location.href='<?= $this->Url->build(['action' => 'newconv' ]) ?>'" >New Converesation</button>
     </div>
 
     <div class="big-div left-div">
@@ -121,9 +121,14 @@
 
                 <div class="name-info">
 
-                    <a class="div-name">
+                    <a class="div-name"  href="<?= $this->Url->build(['action' => 'view', $tgroup->id ])?>">
 
-                        <?= h($tgroup->name) ?>
+                        <?= h($tgroup->name);
+
+                        $this->Html->link(__('View'), ['action' => 'view', $tgroup->id])
+
+
+                        ?>
                     </a>
                     <p class="div-info">
                         <i class="fa fa-map-marker" aria-hidden="true">
