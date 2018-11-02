@@ -69,12 +69,8 @@ class UsersTable extends Table
             'url' => [
                 'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}'
             ],
-            'photo' => [
-                'fields' => [
-                    'dir' => 'photo_dir',
-                    'size' => 'photo_size',
-                    'type' => 'photo_type'
-                ],
+            'photo_url' => [
+
                 'nameCallback' => function ($table, $entity, $data, $field, $settings) {
                     return strtolower($data['name']);
                 },
@@ -127,16 +123,9 @@ class UsersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('photo_url')
-            ->maxLength('photo_url', 255)
-            ->requirePresence('photo_url', 'create')
-            ->notEmpty('photo_url');
-
-        $validator
             ->scalar('name')
             ->maxLength('name', 40)
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
+            ->requirePresence('name', 'create');
 
         $validator
             ->scalar('surname')
