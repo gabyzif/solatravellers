@@ -7,25 +7,23 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Publications Model
+ * Conversations Model
  *
  * @property \App\Model\Table\PhotosTable|\Cake\ORM\Association\BelongsTo $Photos
- * @property \App\Model\Table\TypeOfPublicationsTable|\Cake\ORM\Association\BelongsTo $TypeOfPublications
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \App\Model\Table\TgroupsTable|\Cake\ORM\Association\BelongsTo $Tgroups
- * @property \App\Model\Table\CommentsTable|\Cake\ORM\Association\HasMany $Comments
  *
- * @method \App\Model\Entity\Publication get($primaryKey, $options = [])
- * @method \App\Model\Entity\Publication newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Publication[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Publication|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Publication|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Publication patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Publication[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Publication findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Conversation get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Conversation newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Conversation[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Conversation|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Conversation|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Conversation patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Conversation[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Conversation findOrCreate($search, callable $callback = null, $options = [])
  */
-class PublicationsTable extends Table
+class ConversationsTable extends Table
 {
 
     /**
@@ -38,16 +36,12 @@ class PublicationsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('publications');
+        $this->setTable('conversations');
         $this->setDisplayField('Id');
         $this->setPrimaryKey('Id');
 
         $this->belongsTo('Photos', [
             'foreignKey' => 'photo_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('TypeOfPublications', [
-            'foreignKey' => 'type_of_publication_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Users', [
@@ -61,8 +55,9 @@ class PublicationsTable extends Table
         $this->belongsTo('Tgroups', [
             'foreignKey' => 'tgroup_id'
         ]);
+
         $this->hasMany('Comments', [
-            'foreignKey' => 'publication_id'
+            'foreignKey' => 'conversation_id'
         ]);
     }
 
@@ -113,7 +108,6 @@ class PublicationsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['photo_id'], 'Photos'));
-        $rules->add($rules->existsIn(['type_of_publication_id'], 'TypeOfPublications'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
         $rules->add($rules->existsIn(['tgroup_id'], 'Tgroups'));

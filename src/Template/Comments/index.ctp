@@ -8,8 +8,6 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Comment'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Publications'), ['controller' => 'Publications', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Publication'), ['controller' => 'Publications', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
@@ -21,7 +19,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('description') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('publication_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('conversation_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -31,7 +29,7 @@
             <tr>
                 <td><?= $this->Number->format($comment->id) ?></td>
                 <td><?= h($comment->description) ?></td>
-                <td><?= $comment->has('publication') ? $this->Html->link($comment->publication->Id, ['controller' => 'Publications', 'action' => 'view', $comment->publication->Id]) : '' ?></td>
+                <td><?= $this->Number->format($comment->conversation_id) ?></td>
                 <td><?= $comment->has('user') ? $this->Html->link($comment->user->name, ['controller' => 'Users', 'action' => 'view', $comment->user->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $comment->id]) ?>

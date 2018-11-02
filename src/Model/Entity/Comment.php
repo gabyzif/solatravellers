@@ -8,10 +8,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $description
- * @property int $publication_id
+ * @property int $conversation_id
  * @property int $user_id
+ * @property \Cake\I18n\FrozenDate $date
  *
- * @property \App\Model\Entity\Publication $publication
+ * @property \App\Model\Entity\Conversation $conversation
  * @property \App\Model\Entity\User $user
  */
 class Comment extends Entity
@@ -28,9 +29,10 @@ class Comment extends Entity
      */
     protected $_accessible = [
         'description' => true,
-        'publication_id' => true,
+        'conversation_id' => true,
         'user_id' => true,
-        'publication' => true,
+        'date' => true,
+        'conversation' => true,
         'user' => true
     ];
 }

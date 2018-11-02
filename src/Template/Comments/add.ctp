@@ -8,8 +8,6 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Comments'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Publications'), ['controller' => 'Publications', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Publication'), ['controller' => 'Publications', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
@@ -20,7 +18,7 @@
         <legend><?= __('Add Comment') ?></legend>
         <?php
             echo $this->Form->control('description');
-            echo $this->Form->control('publication_id', ['options' => $publications]);
+            echo $this->Form->control('conversation_id');
             echo $this->Form->control('user_id', ['options' => $users]);
         ?>
     </fieldset>

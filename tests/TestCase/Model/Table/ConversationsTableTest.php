@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CommentsTable;
+use App\Model\Table\ConversationsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CommentsTable Test Case
+ * App\Model\Table\ConversationsTable Test Case
  */
-class CommentsTableTest extends TestCase
+class ConversationsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CommentsTable
+     * @var \App\Model\Table\ConversationsTable
      */
-    public $Comments;
+    public $Conversations;
 
     /**
      * Fixtures
@@ -24,9 +24,11 @@ class CommentsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.comments',
         'app.conversations',
-        'app.users'
+        'app.photos',
+        'app.users',
+        'app.categories',
+        'app.tgroups'
     ];
 
     /**
@@ -37,8 +39,8 @@ class CommentsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Comments') ? [] : ['className' => CommentsTable::class];
-        $this->Comments = TableRegistry::getTableLocator()->get('Comments', $config);
+        $config = TableRegistry::getTableLocator()->exists('Conversations') ? [] : ['className' => ConversationsTable::class];
+        $this->Conversations = TableRegistry::getTableLocator()->get('Conversations', $config);
     }
 
     /**
@@ -48,7 +50,7 @@ class CommentsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Comments);
+        unset($this->Conversations);
 
         parent::tearDown();
     }

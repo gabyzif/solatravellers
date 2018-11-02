@@ -25,36 +25,24 @@
 
             <?php if($is_empty){?>
             <p class="p-hid">You aren't join in any group yet!</p>
+            <?php } else {
+
+                foreach ($my_groups as $my_group):?>
+                    <div class=" small-12 medium-6 columns info-div">
+                        <div class="info-avatar">
+                            <img class="avatar-small"  src="/images/Photos/url/<?= h($my_group->tgroup->photo->url) ?>" alt="">
+                            <a class="div-name">
+                                <?php echo $my_group->tgroup->name ?>
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; }?>
 
 
-            <?php }
 
-            foreach ($my_groups as $my_group):?>
-            <div class=" small-12 medium-6 columns info-div">
-                <div class="info-avatar">
-                    <img class="avatar" src="https://i.imgur.com/UPVxPjb.jpg" alt="Kishore Kumar">
-                </div>
-                <div class="name-info">>
-                    <a class="div-name"
-                        <?php h($my_group->tgroup->name) ?>
-                    </a>
 
-                    <p class="div-info">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        <?php h($cant_users) ?>
-                    </p>
-                    <p class="div-more-info">
-                        Posts
-                    </p>
-                </div>
-            </div>
-            <?php endforeach?>
         </div>
 
-    </div>
-
-    <div class="big-div left-div btn">
-        <button class="button expanded light-pink " onclick="window.location.href='<?= $this->Url->build(['action' => 'newconv' ]) ?>'" >New Converesation</button>
     </div>
 
     <div class="big-div left-div">
@@ -67,34 +55,21 @@
             <p class="p-hid">You aren't join in any conversation yet!</p>
 
 
-        <?php }
+        <?php } else{
 
         foreach ($my_conversations as $my_conv):?>
         <div class="row section-div" >
             <div class=" small-12 medium-6 columns info-div">
-                <div class="info-avatar">
-                    <img class="avatar" src="https://i.imgur.com/UPVxPjb.jpg" alt="Kishore Kumar">
-                </div>
                 <div class="name-info">
                     <a class="div-name">
                         Conversation name
                     </a>
-                    <p class="div-info">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        Info
-                    </p>
 
                 </div>
             </div>
 
         </div>
-        <?php endforeach?>
-
-        <div class="view-more">
-            <p class="view-more-text">
-                <a href="#" class="view-more-link">View More..</a>
-            </p>
-        </div>
+        <?php endforeach; } ?>
 
     </div>
 
@@ -115,8 +90,7 @@
         <div class="row section-div" >
             <div class="small-12 medium-6 columns info-div">
                 <div class="info-avatar">
-                    <??>
-                    <img class="avatar" src="https://i.imgur.com/UPVxPjb.jpg" alt="Kishore Kumar">
+                    <img class="avatar-small"  src="/images/Photos/url/<?= h($tgroup->photo->url) ?>" alt="">
                 </div>
 
                 <div class="name-info">
@@ -160,11 +134,9 @@
         ?>
         <div class="row section-div" >
             <div class="small-12 medium-6 columns info-div">
-                <div class="info-avatar">
-                    <img class="avatar" src="https://i.imgur.com/UPVxPjb.jpg" alt="Kishore Kumar">
-                </div>
+
                 <div class="name-info">
-                    <a class="div-name">
+                    <a class="div-name" href="<?= $this->Url->build(['action' => '../conversations/view', $conv->Id ])?>">
                         <?= h($conv->Title) ?>
                     </a>
                     <p class="div-info">

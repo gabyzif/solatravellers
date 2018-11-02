@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
  * Tgroups Model
  *
  * @property |\Cake\ORM\Association\BelongsTo $Photos
- * @property |\Cake\ORM\Association\HasMany $Publications
+ * @property |\Cake\ORM\Association\HasMany $Conversations
  *
  * @method \App\Model\Entity\Tgroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tgroup newEntity($data = null, array $options = [])
@@ -41,7 +41,7 @@ class TgroupsTable extends Table
         $this->belongsTo('Photos', [
             'foreignKey' => 'photo_id'
         ]);
-        $this->hasMany('Publications', [
+        $this->hasMany('Conversations', [
             'foreignKey' => 'tgroup_id'
         ]);
 

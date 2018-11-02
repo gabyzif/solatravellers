@@ -35,7 +35,7 @@ class TgroupsController extends AppController
     {
         $this->loadModel('Users');
         $this->loadModel('UserGroups');
-        $this->loadModel('Publications');
+        $this->loadModel('Conversations');
         $this->loadModel('Tgroups');
 
 
@@ -49,67 +49,58 @@ class TgroupsController extends AppController
 
 
 
-       //my Groups
-
+       //--------------- My Groups --------------------
 
         $my_groups= $this->UserGroups->find()
-            ->contain("Tgroups")
+            ->contain(["Tgroups"=>"Photos"])
             ->matching("Users")
             ->where(["Users.id" => $user_id]);
 
         if($my_groups->isEmpty()) {
-
             $is_empty=true;
-
         }
 
-        // my conversations
 
-        $my_conversations = $this->Publications->find()
+        //----------------- My conversations-----------
+
+        $my_conversations = $this->Conversations->find()
             ->contain("Tgroups")
             ->contain("Users")
             ->where(["Users.id" => $user_id]);
 
 
         if($my_conversations->isEmpty()) {
-
             $is_empty_conv=true;
-
         }
 
 
 
-       //cantidad de usuarios y posts
+       //------------------------Cant Users------------------
 
         foreach ($tgroups as $tgroup){
             $cant_users[$tgroup->id] = $this->UserGroups->find()
                 ->where(['group_id' => $tgroup->id])
                 ->count();
 
-            // cantidad de post
-            $cant_posts[$tgroup->id] =$this->Publications->find()
+            //---------------------Cant Posts-------------------
+            $cant_posts[$tgroup->id] =$this->Conversations->find()
                 ->where(['tgroup_id' => $tgroup->id])
                 ->count();
-
-
         }
 
-        //cant usuarios por publicación
+        //------------------conversations---------------------------
 
-
-        //publicaciones
-
-        $conversations = $this->Publications->find()
+        $conversations = $this->Conversations->find()
             ->contain("Tgroups")
             ->contain("Users");
 
         foreach ($conversations as $conv){
-            $cant_users_conv[$conv->id] = $this->Publications->find()
+            $cant_users_conv[$conv->id] = $this->Conversations->find()
                 ->where(['user_id' => $conv->id_user])
                 ->count();
-
-
         }
+
+
 
         $this->set(compact('tgroups','my_groups','cant_users', 'cant_posts','conversations','user_id','is_empty','my_conversations','is_empty_conv','cant_users_conv'));
 
@@ -124,7 +115,7 @@ class TgroupsController extends AppController
      */
     public function view($id = null)
     {
-        $this->loadModel('Publications');
+        $this->loadModel('Conversations');
         $this->loadModel('UserGroups');
         $this->loadModel('Photos');
         $this->loadModel('Users');
@@ -144,13 +135,13 @@ class TgroupsController extends AppController
             ->where(['group_id' => $tgroup->id])
             ->count();
 
-        $conversations = $this->Publications->find()
+        $conversations = $this->Conversations->find()
             ->contain("Tgroups")
             ->contain("Users")
-            ->where(["Publications.tgroup_id" => $id]);
+            ->where(["Conversations.tgroup_id" => $id]);
 
         $users_group = $this->UserGroups->find()
-            ->contain (["Users"=>"Photos"])
+            ->contain (["Users"])
             ->where(['group_id' => $tgroup->id]);
 
 
@@ -170,9 +161,10 @@ class TgroupsController extends AppController
 
 
 
+        $userGroup = $this->UserGroups->newEntity();
 
 
-        $this->set(compact('tgroup', 'conversations', 'cant_users','is_in_group', 'users', 'users_group'));
+        $this->set(compact('userGroup','tgroup', 'conversations', 'cant_users','is_in_group', 'users', 'users_group'));
     }
 
     /**
@@ -198,23 +190,31 @@ class TgroupsController extends AppController
    
 
 
-    public function joinGroup($group_id){
+    public function joinGroup(){
+
+        $this->loadModel('UserGroups');
+        $this->loadModel('Tgroups');
+        $this->loadModel('Users');
 
 
         $userGroup = $this->UserGroups->newEntity();
 
-        if ($this->request->is('get')) {
+        if ($this->request->is('post')) {
             $userGroup = $this->UserGroups->patchEntity($userGroup, $this->request->getData());
+
+            $userGroup->user_id=$this->User->id;
+
             if ($this->UserGroups->save($userGroup)) {
+
                 $this->Flash->success(__('The user group has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The user group could not be saved. Please, try again.'));
         }
-        $users = $this->UserGroups->Users->find('list', ['limit' => 200]);
-        $tgroups = $this->UserGroups->Tgroups->find('list', ['limit' => 200]);
-        $this->set(compact('userGroup', 'users', 'tgroups'));
+
+        $this->set(compact('userGroup'));
+
 
     }
     public function newconv()

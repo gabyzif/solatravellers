@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Comments Model
  *
- * @property \App\Model\Table\PublicationsTable|\Cake\ORM\Association\BelongsTo $Publications
+ * @property \App\Model\Table\ConversationsTable|\Cake\ORM\Association\BelongsTo $Conversations
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\Comment get($primaryKey, $options = [])
@@ -38,8 +38,8 @@ class CommentsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Publications', [
-            'foreignKey' => 'publication_id',
+        $this->belongsTo('Conversations', [
+            'foreignKey' => 'conversation_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Users', [
@@ -66,6 +66,11 @@ class CommentsTable extends Table
             ->requirePresence('description', 'create')
             ->notEmpty('description');
 
+        $validator
+            ->date('date')
+            ->requirePresence('date', 'create')
+            ->notEmpty('date');
+
         return $validator;
     }
 
@@ -78,7 +83,7 @@ class CommentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['publication_id'], 'Publications'));
+        $rules->add($rules->existsIn(['conversation_id'], 'Conversations'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;

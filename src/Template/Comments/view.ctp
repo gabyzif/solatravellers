@@ -11,8 +11,6 @@
         <li><?= $this->Form->postLink(__('Delete Comment'), ['action' => 'delete', $comment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $comment->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Comments'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Comment'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Publications'), ['controller' => 'Publications', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Publication'), ['controller' => 'Publications', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
     </ul>
@@ -25,16 +23,16 @@
             <td><?= h($comment->description) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Publication') ?></th>
-            <td><?= $comment->has('publication') ? $this->Html->link($comment->publication->Id, ['controller' => 'Publications', 'action' => 'view', $comment->publication->Id]) : '' ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('User') ?></th>
             <td><?= $comment->has('user') ? $this->Html->link($comment->user->name, ['controller' => 'Users', 'action' => 'view', $comment->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($comment->id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Conversation Id') ?></th>
+            <td><?= $this->Number->format($comment->conversation_id) ?></td>
         </tr>
     </table>
 </div>

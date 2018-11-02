@@ -12,12 +12,19 @@
     <!--left-->
     <div class="cell medium-6 large-4">
         <div class="big-div left-div btn">
-            <button class="button expanded light-pink "  onclick="window.location.href='<?= $this->Url->build(['action' => 'joinGroup' , $tgroup->id])?>'">Join group</button>
-
             <?php if(!$is_in_group){?>
+            <?= $this->Form->create($userGroup, ['url' => 'tgroups/joinGroup']) ?>
+
+                <?php
+                echo $this->Form->hidden('group_id', ['value' => $tgroup->id]);
+                ?>
+            <?= $this->Form->button(__('Join Group'),array('class'=>'button expanded light-pink')) ?>
+            <?= $this->Form->end() ?>
+
+
                 <p>Join the group to start a new conversation</p>
             <?php }else{
-                echo "<p></p>";
+                echo "<p>Welcome to the $tgroup->name group</p>";
             } ?>
 
         </div>
@@ -32,7 +39,7 @@
                 <div class=" small-12 medium-6 columns info-div">
                     <div class="info-avatar">
                         <?php foreach($users_group as $userG):?>
-                        <img class="avatar-small"  src="/images/Photos/url/<?= h($userG->user->photo->url) ?>" alt="">
+                        <img class="avatar-small"  src="/images/Photos/url/<?= h($userG->user->photo_url) ?>" alt="">
                        <?php endforeach?>
 
                     </div>
@@ -52,8 +59,8 @@
             <div class="row section-div" >
                 <div class="small-12 medium-6 columns info-div">
                     <div class="info-avatar">
-                        <img class="avatar" src="/images/Photos/url/<?= h($tgroup->photo->url) ?>" alt="                            <?= h($tgroup->name) ?>
-">
+                        <img class="avatar" src="/images/Photos/url/<?= h($tgroup->photo->url) ?>" alt=" <?= h($tgroup->name) ?>">
+
                     </div>
                     <div class="name-info">
                         <h4 class="div-name">

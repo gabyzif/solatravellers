@@ -4,13 +4,12 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Publication Entity
+ * Conversation Entity
  *
  * @property int $Id
  * @property string $Description
  * @property \Cake\I18n\FrozenDate $Date
  * @property int $photo_id
- * @property int $type_of_publication_id
  * @property int $user_id
  * @property int $category_id
  * @property string $Title
@@ -18,13 +17,11 @@ use Cake\ORM\Entity;
  * @property int $tgroup_id
  *
  * @property \App\Model\Entity\Photo $photo
- * @property \App\Model\Entity\TypeOfPublication $type_of_publication
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\Tgroup $tgroup
- * @property \App\Model\Entity\Comment[] $comments
  */
-class Publication extends Entity
+class Conversation extends Entity
 {
 
     /**
@@ -40,17 +37,14 @@ class Publication extends Entity
         'Description' => true,
         'Date' => true,
         'photo_id' => true,
-        'type_of_publication_id' => true,
         'user_id' => true,
         'category_id' => true,
         'Title' => true,
         'LongDescription' => true,
         'tgroup_id' => true,
         'photo' => true,
-        'type_of_publication' => true,
         'user' => true,
         'category' => true,
-        'tgroup' => true,
-        'comments' => true
+        'tgroup' => true
     ];
 }
