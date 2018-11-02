@@ -41,16 +41,26 @@
                 </div>
 
             </div>
+
         </div>
+        <div class="comments form large-9 medium-8 columns content">
+            <?= $this->Form->create($new_comment,  ['url' => '../comments/add']) ?>
+            <fieldset>
+                <legend><?= __('Add Comment') ?></legend>
+                <?php
+                echo $this->Form->control('description');
+                echo $this->Form->hidden('conversation_id', ['value' => $id]);
+                echo $this->Form->hidden('user_id', ['value' => $User->id]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+
     </div>
     <!-- RIGHT -->
 
     <div class="cell medium-6 large-4">
-        <div class="big-div right-div btn">
-            <button class="button expanded light-pink ">Join group</button>
-            <p class="text-center">Only members of the group can post content</p>
-
-        </div>
 
         <div class="big-div right-div">
             <div class="div-header">

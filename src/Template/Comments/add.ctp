@@ -13,7 +13,7 @@
     </ul>
 </nav>
 <div class="comments form large-9 medium-8 columns content">
-    <?= $this->Form->create($comment) ?>
+    <?= $this->Form->create($new_comment) ?>
     <fieldset>
         <legend><?= __('Add Comment') ?></legend>
         <?php

@@ -71,10 +71,40 @@ class ConversationsController extends AppController
 
         $conversations = $this->Conversations->find()
         ->where(["conversations.Id"=>$id])
-            ->contain(["Users"])
-        ;
+            ->contain(["Users"]);
 
-        $this->set(compact('conversation','users','conversations'));
+        $is_in_conv = false;
+
+
+            if($conversation->user_id==$this->User->id){
+                $is_in_conv=true;
+
+
+            }
+
+
+
+
+        $this->set(compact('conversation','users','conversations','is_in_conv','id'));
+    }
+
+    public function joinConv(){
+        $comment = $this->Comments->newEntity();
+        if ($this->request->is('post')) {
+
+
+            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
+
+
+            if ($this->Comments->save($comment)) {
+                $this->Flash->success(__('The comment has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
+
+            $this->set(compact('comment'));
+        }
     }
 
     /**
