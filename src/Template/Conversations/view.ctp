@@ -44,15 +44,13 @@
 
         </div>
         <div class="comments form large-9 medium-8 columns content">
-            <?= $this->Form->create($new_comment,  ['url' => '../comments/add']) ?>
-            <fieldset>
-                <legend><?= __('Add Comment') ?></legend>
+            <?= $this->Form->create($comment,  ['url' => 'conversations/newComment']) ?>
                 <?php
                 echo $this->Form->control('description');
                 echo $this->Form->hidden('conversation_id', ['value' => $id]);
                 echo $this->Form->hidden('user_id', ['value' => $User->id]);
                 ?>
-            </fieldset>
+
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>
         </div>

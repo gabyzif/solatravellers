@@ -66,6 +66,8 @@ class ConversationsController extends AppController
     public function view($id = null)
     {
 
+        $this->loadModel("Comments");
+
         $conversation = $this->Conversations->get($id,[
             'contain'=>["Tgroups","Users","Comments"=>"Users"]]);
 
@@ -84,9 +86,36 @@ class ConversationsController extends AppController
 
 
 
+        $comment = $this->Comments->newEntity();
 
-        $this->set(compact('conversation','users','conversations','is_in_conv','id'));
+
+        $this->set(compact('conversation','users','conversations','is_in_conv','id','comment'));
     }
+
+    public function newComment(){
+
+        $this->loadModel("Comments");
+
+        $comment = $this->Comments->newEntity();
+
+        if ($this->request->is('post')) {
+            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
+
+
+            if ($this->Comments->save($comment)) {
+
+                $this->Flash->success(__('The user group has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The user group could not be saved. Please, try again.'));
+        }
+
+        $this->set(compact('comment'));
+
+
+    }
+
 
     public function joinConv(){
         $comment = $this->Comments->newEntity();

@@ -57,13 +57,11 @@ class CommentsController extends AppController
             if ($this->Comments->save($comment)) {
                 $this->Flash->success(__('The comment has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => '../conversations/index']);
             }
             $this->Flash->error(__('The comment could not be saved. Please, try again.'));
         }
-        $publications = $this->Comments->Publications->find('list', ['limit' => 200]);
-        $users = $this->Comments->Users->find('list', ['limit' => 200]);
-        $this->set(compact('comment', 'publications', 'users'));
+       $this->set(compact('comment', 'publications'));
     }
 
     /**
