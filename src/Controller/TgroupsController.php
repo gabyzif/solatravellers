@@ -217,45 +217,6 @@ class TgroupsController extends AppController
 
 
     }
-    public function newconv()
-    {
-        $this->loadModel('Publications');
-        $this->loadModel('UserGroups');
-        $this->loadModel('Photos');
-        $this->loadModel('Users');
-        $this->loadModel('TypeOfPublications');
-
-
-
-
-
-        $publication = $this->Publications->newEntity();
-        if ($this->request->is('post'))
-        {
-            $publication = $this->Publications->patchEntity($publication, $this->request->getData());
-
-            /*echo "<pre>";
-            var_dump($publication);
-            echo "</pre>";*/
-
-            if ($this->Publications->save($publication)) {
-                $this->Flash->success(__('The publication has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-
-            $this->Flash->error(__('The publication could not be saved. Please, try again.'));
-        }
-
-
-
-        $id_user = $this->User->id;
-
-
-        $tgroups = $this->Publications->Tgroups->find('list', ['limit' => 200]);
-
-        $this->set(compact('publication',  'id_user', 'tgroups'));
-    }
 
     /**
      * Edit method

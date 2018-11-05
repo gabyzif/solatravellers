@@ -24,6 +24,7 @@
                                 <article class="article-row">
                                     <div class="article-row-content">
                                         <p class="article-row-content-description"><?php echo $comment->description ?>.</p>
+                                        <p><?= $this->Html->link(__('Edit'), ['action' => '../comments/edit', $comment->id]) ?> </p>
 
                                         <p class="article-row-content-author">By <?php echo $comment->user->name ?></p>
                                         <time class="article-row-content-time" datetime="2008-02-14 20:00"><?php echo $comment->date ?></time>
@@ -44,14 +45,14 @@
 
         </div>
         <div class="comments form large-9 medium-8 columns content">
-            <?= $this->Form->create($comment,  ['url' => 'conversations/newComment']) ?>
+            <?= $this->Form->create($comment,  ['url' => 'conversations/addComment']) ?>
                 <?php
                 echo $this->Form->control('description');
                 echo $this->Form->hidden('conversation_id', ['value' => $id]);
                 echo $this->Form->hidden('user_id', ['value' => $User->id]);
                 ?>
 
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Submit'),array('class'=>'button expanded light-pink')) ?>
             <?= $this->Form->end() ?>
         </div>
 

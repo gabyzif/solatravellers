@@ -105,7 +105,10 @@
                             <div class="name-info">
                                 <a class="div-name">
                                     <?= h($conv->Title) ?>
+
                                 </a>
+                                <?php $this->Html->link(__('Edit Comment'), ['action' => 'edit', $comment->id]) ?>
+
                                 <p class="div-info">
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                     <?= h($conv->Description) ?>

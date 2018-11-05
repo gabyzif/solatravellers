@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 
 use App\Controller\AppController;
 
@@ -92,49 +93,35 @@ class ConversationsController extends AppController
         $this->set(compact('conversation','users','conversations','is_in_conv','id','comment'));
     }
 
-    public function newComment(){
 
+    public function addComment()
+    {
         $this->loadModel("Comments");
 
         $comment = $this->Comments->newEntity();
 
-        if ($this->request->is('post')) {
+        if ($this->request->is(array('post','put'))) {
+
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
 
 
+            $comment->date= Time::now();
+
             if ($this->Comments->save($comment)) {
 
-                $this->Flash->success(__('The user group has been saved.'));
+                $this->Flash->success(__('The conversation has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view/'.$comment->conversation_id]);
             }
-            $this->Flash->error(__('The user group could not be saved. Please, try again.'));
+            $this->Flash->error(__('The conversation could not be saved. Please, try again.'));
         }
+
 
         $this->set(compact('comment'));
-
-
     }
 
 
-    public function joinConv(){
-        $comment = $this->Comments->newEntity();
-        if ($this->request->is('post')) {
 
-
-            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-
-
-            if ($this->Comments->save($comment)) {
-                $this->Flash->success(__('The comment has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
-
-            $this->set(compact('comment'));
-        }
-    }
 
     /**
      * Add method
