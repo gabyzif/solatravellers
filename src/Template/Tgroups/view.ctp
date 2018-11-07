@@ -103,11 +103,10 @@
                         <div class="small-12 medium-6 columns info-div">
 
                             <div class="name-info">
-                                <a class="div-name">
+                                <a class="div-name" href="<?= $this->Url->build(['action' => '../conversations/view', $conv->Id ])?>">
                                     <?= h($conv->Title) ?>
 
                                 </a>
-                                <?php $this->Html->link(__('Edit Comment'), ['action' => 'edit', $comment->id]) ?>
 
                                 <p class="div-info">
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>

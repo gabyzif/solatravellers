@@ -45,33 +45,6 @@
 
     </div>
 
-    <div class="big-div left-div">
-        <div class="div-header">
-            <h6 class="header-title">
-                My conversations
-            </h6>
-        </div>
-        <?php if($is_empty_conv){?>
-            <p class="p-hid">You aren't join in any conversation yet!</p>
-
-
-        <?php } else{
-
-        foreach ($my_conversations as $my_conv):?>
-        <div class="row section-div" >
-            <div class=" small-12 medium-6 columns info-div">
-                <div class="name-info">
-                    <a class="div-name">
-                        Conversation name
-                    </a>
-
-                </div>
-            </div>
-
-        </div>
-        <?php endforeach; } ?>
-
-    </div>
 
 </div>
 <div class="cell medium-6 large-8 ">

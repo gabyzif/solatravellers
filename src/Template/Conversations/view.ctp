@@ -24,7 +24,7 @@
                                 <article class="article-row">
                                     <div class="article-row-content">
                                         <p class="article-row-content-description"><?php echo $comment->description ?>.</p>
-                                        <p><?= $this->Html->link(__('Edit'), ['action' => '../comments/edit', $comment->id]) ?> </p>
+                                        <p><?= $this->Html->link(__('| edit |'), ['action' => '../comments/edit', $comment->id]) ?> <?= $this->Html->link(__('| delete |'), ['action' => '../comments/delete', $comment->id]) ?> </p>
 
                                         <p class="article-row-content-author">By <?php echo $comment->user->name ?></p>
                                         <time class="article-row-content-time" datetime="2008-02-14 20:00"><?php echo $comment->date ?></time>

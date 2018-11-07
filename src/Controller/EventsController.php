@@ -24,6 +24,12 @@ class EventsController extends AppController
             $this->Auth->allow('jason');
         }
 
+        $this->loadComponent('Search.Prg', [
+            // This is default config. You can modify "actions" as needed to make
+            // the PRG component work only for specified methods.
+            'actions' => ['index', 'lookup']
+        ]);
+
     }
 
     /**
@@ -60,9 +66,13 @@ class EventsController extends AppController
 
         $is_empty=false;
 
-        $events = $this->paginate($this->Events->find()
+        $events = $this->paginate($this->Events
+            ->find('search', ['search' => $this->request->getQueryParams()])
+
             ->contain(['City'])
-            ->contain(['Photos']));
+            ->contain(['Photos'])
+            ->where(['description IS NOT' => null]));
+
 
         $this->set([
             'events' => $events,
@@ -73,7 +83,7 @@ class EventsController extends AppController
 
         $my_events= $this->UsersEvents->find()
             ->contain(["Events"=>"Photos"])
-            ->contain(["Users"=>"Photos"])
+            ->contain(["Users"])
             ->where(["Users.id" => $this->User->id]);
 
         if($my_events->isEmpty()) {

@@ -68,8 +68,21 @@
                     Search
                 </h6>
             </div>
+
             <div class="row section-div" >
                 <div class=" small-12 medium-6 columns search-div">
+                    <?php
+
+                    echo $this->Form->create(null, ['valueSources' => 'query'],array('class'=>'animated-search-form'));
+                    // You'll need to populate $authors in the template from your controller
+                    echo $this->Form->control('city_id'),(['class'=>'animated-search-form']);
+                    // Match the search param in your table configuration
+                    echo $this->Form->control('q'),(['class'=>'animated-search-form']);
+                    echo $this->Form->button('Filter', ['type' => 'submit']);
+                    echo $this->Html->link('Reset', ['action' => 'index']);
+                    echo $this->Form->end();
+
+                    ?>
                     <div class="search-input-div">
                         <input type="search" name="search" placeholder="Name" class="animated-search-form">
                         <input type="search" name="search" placeholder="City" class="animated-search-form">
@@ -150,6 +163,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/what-input/dist/what-input.js"></script>

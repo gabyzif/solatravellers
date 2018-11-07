@@ -83,6 +83,8 @@ class CommentsController extends AppController
      */
     public function edit($id = null)
     {
+
+        $this->loadModel("Comments");
         $comment = $this->Comments->get($id, [
             'contain' => []
         ]);
@@ -93,14 +95,14 @@ class CommentsController extends AppController
 
             $comment->date= Time::now();
 
-            debug($this->Comments->save($comment));die;
+         //   debug($this->Comments->save($comment));die;
 
 
             if ($this->Comments->save($comment)) {
 
                 $this->Flash->success(__('The comment has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => '../conversations/view/'.$comment->conversation_id]);
             }
             $this->Flash->error(__('The comment could not be saved. Please, try again.'));
         }
@@ -116,7 +118,8 @@ class CommentsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+       // $this->request->allowMethod(['post', 'delete']);
+
         $comment = $this->Comments->get($id);
         if ($this->Comments->delete($comment)) {
             $this->Flash->success(__('The comment has been deleted.'));
@@ -124,6 +127,6 @@ class CommentsController extends AppController
             $this->Flash->error(__('The comment could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => '../conversations/view/'.$comment->conversation_id]);
     }
 }

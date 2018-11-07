@@ -164,7 +164,7 @@ class TgroupsController extends AppController
         $userGroup = $this->UserGroups->newEntity();
 
 
-        $this->set(compact('userGroup','tgroup', 'conversations', 'cant_users','is_in_group', 'users', 'users_group'));
+        $this->set(compact('userGroup','tgroup', 'conversations', 'cant_users','is_in_group', 'users', 'users_group','comment'));
     }
 
     /**
