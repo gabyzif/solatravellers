@@ -47,16 +47,13 @@ class SesionController extends AppController
 
             $user->type_of_account_id=1;
 
-
-
+            //debug($user);die;
             if ($this->Users->save($user)) {
 
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            echo "<pre>";
-            var_dump($user);
-            echo "</pre>";
+
 
 
 

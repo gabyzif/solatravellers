@@ -20,11 +20,10 @@
             'minYear' => date('Y') - 70,
             'maxYear' => date('Y') - 18 ));
 
-        echo $this->Form->control('photo_url', array (
-
+        echo $this->Form->control('photo_url', [
                 'type'=>'file',
                 'label'=>false
-        ));
+        ]);
 
         ?>
 

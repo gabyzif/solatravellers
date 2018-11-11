@@ -47,7 +47,7 @@
         <div class="comments form large-9 medium-8 columns content">
             <?= $this->Form->create($comment,  ['url' => 'conversations/addComment']) ?>
                 <?php
-                echo $this->Form->control('description');
+                echo $this->Form->control('description',['value' => '']);
                 echo $this->Form->hidden('conversation_id', ['value' => $id]);
                 echo $this->Form->hidden('user_id', ['value' => $User->id]);
                 ?>

@@ -73,25 +73,23 @@
                 <div class=" small-12 medium-6 columns search-div">
                     <?php
 
-                    echo $this->Form->create(null, ['valueSources' => 'query'],array('class'=>'animated-search-form'));
+
+
+                    echo $this->Form->create(null, ['type' => 'get', 'class'=>'animated-search-form', 'url'=>'../events/index']);
                     // You'll need to populate $authors in the template from your controller
-                    echo $this->Form->control('city_id'),(['class'=>'animated-search-form']);
+                    echo $this->Form->control('city_id', ['class'=>'animated-search-form', "options"=>$citys]);
                     // Match the search param in your table configuration
-                    echo $this->Form->control('q'),(['class'=>'animated-search-form']);
-                    echo $this->Form->button('Filter', ['type' => 'submit']);
-                    echo $this->Html->link('Reset', ['action' => 'index']);
+                    //echo $this->Form->control('q'),(['class'=>'animated-search-form']);
+                   // echo $this->Form->control('date', ['type' => 'date' ,'dateFormat' => 'DMY',
+                                            //'minYear' => date('Y') - 2,
+                                            //'maxYear' => date('Y') + 2 ]);
+
+                    echo $this->Form->button('Filter' , ['type' => 'submit', 'class'=> "button expanded light-pink"]);
+                    echo $this->Html->link(' Reset', ['action' => 'index']);
                     echo $this->Form->end();
 
                     ?>
-                    <div class="search-input-div">
-                        <input type="search" name="search" placeholder="Name" class="animated-search-form">
-                        <input type="search" name="search" placeholder="City" class="animated-search-form">
 
-                        <input type="date" id="start" name="trip"
-                               value="2018-07-22"
-                               min="2018-01-01" max="2018-12-31" />
-
-                    </div>
 
                 </div>
 
@@ -110,9 +108,16 @@
             <div class="div-header">
                 <h6 class="header-title"> Events </h6>
 
+                <?php  if($events->isEmpty())
+                {?>
+                <div class=" columns info-div">
 
+                    <p>Sorry! there is no event in that city yet</p>
+                    <div>
+                        <?php }?>
             </div>
             <div class="row section-div" >
+
                 <?php foreach ($events as $event):?>
                     <div class="small-12 medium-6 columns info-div">
                         <div class="info-avatar">
@@ -161,6 +166,7 @@
                 </ul>
             </nav>
         </div>
+
     </div>
 </div>
 

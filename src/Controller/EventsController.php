@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+use App\Model\Entity\City;
 use Cake\Event\Event;
 
 
@@ -63,15 +64,32 @@ class EventsController extends AppController
 
         $this->loadModel('Users');
         $this->loadModel('UsersEvents');
+        $this->loadModel("Citys");
 
         $is_empty=false;
 
-        $events = $this->paginate($this->Events
-            ->find('search', ['search' => $this->request->getQueryParams()])
 
-            ->contain(['City'])
-            ->contain(['Photos'])
-            ->where(['description IS NOT' => null]));
+        $city = $this->request->getQuery('city_id');
+
+        if(isset($city)){
+
+
+            $events = $this->paginate($this->Events->find()
+                ->contain(["Photos"])
+                ->contain(["City"])
+                ->where(["city_id" => $city]));
+
+
+        }
+        else {
+            $events = $this->paginate($this->Events
+                ->find()
+                ->contain(['City'])
+                ->contain(['Photos'])
+                ->where(['description IS NOT' => null]));
+
+        }
+
 
 
         $this->set([
@@ -97,8 +115,10 @@ class EventsController extends AppController
                 ->where(['event_id' => $event->id])
                 ->count(); }
 
+        $citys = $this->Events->City->find('list', ['limit' => 200]);
 
-        $this->set(compact('events','cant_users', 'my_events','is_empty'));
+
+        $this->set(compact('events','cant_users', 'my_events','is_empty','citys','city','event_filtered'));
     }
 
     /**
@@ -108,12 +128,42 @@ class EventsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+
+    public function search(){
+
+        $this->loadModel('Users');
+        $this->loadModel('Photos');
+        $this->loadModel('Citys');
+
+        $city = $this->request->getQuery('city_id');
+       // $date = $this->request->getQuery('date');
+
+      //  $date=$date['year']."-".$date['month']."-".$date["day"];
+
+        if(isset($city)){
+            $event= $this->Events->find()
+                ->contain(["Photos"])
+                ->contain(["City"])
+                ->where(["city_id" => $city]);
+        }
+
+         //   ->where(["date"=>$date]);
+
+
+       /* $event = $this->Events->get([
+            'contain' => ['Photos', 'Users','City']
+        ]);*/
+
+        $this->set(compact('event', 'city'));
+
+    }
     public function view($id = null)
     {
 
         $this->loadModel('UsersEvents');
         $this->loadModel('Users');
         $this->loadModel('Photos');
+        $this->loadModel('Citys');
 
 
         $event = $this->Events->get($id, [
@@ -125,12 +175,13 @@ class EventsController extends AppController
             ->count();
 
         $users_events = $this->UsersEvents->find()
-            ->contain (["Users"=>"Photos"])
+            ->contain (["Users"])
             ->where(['event_id' => $event->id]);
 
 
         $this->set(compact('event',  'cant_users','users_events'));
     }
+
 
     /**
      * Add method
