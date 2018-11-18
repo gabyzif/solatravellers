@@ -16,12 +16,12 @@
     <fieldset>
         <legend><?= __('Add Event') ?></legend>
         <?php
+        echo $this->Form->control('name');
         echo $this->Form->control('description');
         echo $this->Form->control('long_description');
         echo  $this->Form->control('photos[].url',
             ['type' => 'file'],
             ['class' => 'form-control']);
-        echo $this->Form->control('name');
         echo $this->Form->control('date');
       //  echo $this->Form->control('users._ids', ['options' => $users]);
         ?>

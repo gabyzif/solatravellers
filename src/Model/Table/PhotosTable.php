@@ -46,6 +46,10 @@ class PhotosTable extends Table
             'foreignKey' => 'photo_id'
         ]);
 
+        $this->hasMany('Events', [
+            'foreignKey' => 'photo_id'
+        ]);
+
         $this->addBehavior('Josegonzalez/Upload.Upload', [
             'url' => [
                 'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}'

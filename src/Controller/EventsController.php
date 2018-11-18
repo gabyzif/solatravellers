@@ -179,7 +179,24 @@ class EventsController extends AppController
             ->where(['event_id' => $event->id]);
 
 
-        $this->set(compact('event',  'cant_users','users_events'));
+        foreach ($users_events as $user_ev){
+
+            if($user_ev->user_id==$this->User->id){
+                $is_in_event=true;
+
+
+            }
+
+            else { $is_in_event=false;}
+
+
+        }
+
+
+
+        $userEvent = $this->UsersEvents->newEntity();
+
+        $this->set(compact('event',  'cant_users','users_events','is_in_event','userEvent'));
     }
 
 
@@ -193,20 +210,48 @@ class EventsController extends AppController
         $event = $this->Events->newEntity();
         if ($this->request->is('post')) {
             $event = $this->Events->patchEntity($event, $this->request->getData(), ['associated' => 'Photos']);
+
             $event->active = true;
 
             if ($this->Events->save($event)) {
-                $this->Flash->success(__('The event has been saved.'));
+
+                $this->Flash->success(__('The article has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The event could not be saved. Please, try again.'));
+            $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
-        $photos = $this->Events->Photos->find('list', ['limit' => 200]);
-        $users = $this->Events->Users->find('list', ['limit' => 200]);
-        $this->set(compact('event', 'photos', 'users'));
+        $this->set(compact('event'));
     }
 
+
+    public function joinEvent(){
+
+        $this->loadModel('UsersEvents');
+        $this->loadModel('Events');
+        $this->loadModel('Users');
+
+
+        $userEvent = $this->UsersEvents->newEntity();
+
+        if ($this->request->is('post')) {
+            $userEvent = $this->UsersEvents->patchEntity($userEvent, $this->request->getData());
+
+            $userEvent->user_id=$this->User->id;
+
+            if ($this->UsersEvents->save($userEvent)) {
+
+                $this->Flash->success(__('you are in'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Could not be saved. Please, try again.'));
+        }
+
+        $this->set(compact('userEvent'));
+
+
+    }
     /**
      * Edit method
      *

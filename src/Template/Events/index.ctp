@@ -14,7 +14,7 @@
     <!--left-->
     <div class="cell medium-6 large-4">
         <div class="big-div left-div btn">
-            <button class="button expanded light-pink ">Create event</button>
+            <button class="button expanded light-pink "  onclick="window.location.href='<?= $this->Url->build(['action' => 'add' ]) ?>'">New Event</button>
 
         </div>
 
@@ -145,31 +145,21 @@
                             </p>
                         </div>
 
-                        <button class="button">Join</button>
 
                     </div>
 
                 <?php endforeach;?>
 
             </div>
-            <nav id="pagination" aria-label="Pagination">
-                <ul class="pagination text-center">
-                    <li class="pagination-previous disabled">Previous</li>
-                    <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-                    <li><a href="#" aria-label="Page 2">2</a></li>
-                    <li><a href="#" aria-label="Page 3">3</a></li>
-                    <li><a href="#" aria-label="Page 4">4</a></li>
-                    <li class="ellipsis"></li>
-                    <li><a href="#" aria-label="Page 12">12</a></li>
-                    <li><a href="#" aria-label="Page 13">13</a></li>
-                    <li class="pagination-next"><a href="#" aria-label="Next page">Next</a></li>
-                </ul>
-            </nav>
+
         </div>
 
     </div>
 </div>
 
+    </div>
+
+</div>
 
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/what-input/dist/what-input.js"></script>

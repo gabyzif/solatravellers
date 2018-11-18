@@ -6,7 +6,19 @@
     <div class="cell medium-6 large-4">
 
         <div class="big-div left-div btn">
-            <button class="button expanded light-pink ">I'll be there</button>
+            <?php if(!$is_in_event){?>
+                <?= $this->Form->create($userEvent, ['url' => 'events/joinEvent']) ?>
+
+                <?php
+                echo $this->Form->hidden('event_id', ['value' => $event->id]);
+                ?>
+                <?= $this->Form->button(__("I'll be there"),array('class'=>'button expanded light-pink')) ?>
+                <?= $this->Form->end() ?>
+
+
+            <?php }else{
+                echo "<p>You are going to this event</p>";
+            } ?>
         </div>
         <div class="big-div left-div">
             <div class="div-header">
@@ -18,10 +30,7 @@
                 <div class=" small-12 medium-6 columns info-div">
                     <div class="info-avatar">
                         <?php foreach($users_events as $userE):?>
-                            <img class="avatar-small"  src="/images/Photos/url/<?= h($userE->user->photo->url) ?>" alt="">
-                        <a class="div-name">
-                            <?php echo $userE->user->name ?>
-                        </a>
+                            <img class="avatar-small"  src="/images/Photos/url/<?= h($userE->user->photo_url) ?>" alt="">
                     </div>
                 </div>
                 <?php endforeach?>
@@ -51,7 +60,12 @@
                         <p class="div-info">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>
                             <?php echo $event->city->name?>
+                            <?php echo $event->direction?>
 
+
+                        </p>
+                        <p class="div-info">
+                            <?php echo $event->direction?>
                         </p>
 
                         <?php if($event->active == 0){?>
