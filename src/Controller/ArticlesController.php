@@ -27,8 +27,13 @@ class ArticlesController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
+    public $paginate = [
+        // Other keys here.
+        'maxLimit' => 10
+    ];
     public function index()
     {
+
 
         $articles = $this->paginate($this->Articles->find()->where(['active'=>true])
             ->contain(['Photos'])
@@ -69,11 +74,12 @@ class ArticlesController extends AppController
     public function add()
     {
 
-        /*if($this->User->type_of_account_id != 5){
+        if($this->User->type_of_account_id != 5){
 
-            $this->Auth->deny();
+            return $this->redirect(['action' => 'index']);
+        }
 
-        }*/
+
         $article = $this->Articles->newEntity();
         if ($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData(), ['associated' => 'Photos']);

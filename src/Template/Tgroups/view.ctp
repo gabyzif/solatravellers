@@ -58,10 +58,6 @@
 
             <div class="row section-div" >
                 <div class="small-12 medium-6 columns info-div">
-                    <div class="info-avatar">
-                        <img class="avatar" src="/images/Photos/url/<?= h($tgroup->photo->url) ?>" alt=" <?= h($tgroup->name) ?>">
-
-                    </div>
                     <div class="name-info">
                         <h4 class="div-name">
 
@@ -77,6 +73,10 @@
                         <p class="div-more-info">
                             <?= h($cant_users)?> members
                         </p>
+                        <?php if($User->type_of_account_id == 5){ ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tgroup->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tgroup->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tgroup->id)]) ?>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -121,19 +121,16 @@
 
 
                 <?php endforeach; ?>
-                <nav id="pagination" aria-label="Pagination">
+                <div class="paginator">
                     <ul class="pagination text-center">
-                        <li class="pagination-previous disabled">Previous</li>
-                        <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-                        <li><a href="#" aria-label="Page 2">2</a></li>
-                        <li><a href="#" aria-label="Page 3">3</a></li>
-                        <li><a href="#" aria-label="Page 4">4</a></li>
-                        <li class="ellipsis"></li>
-                        <li><a href="#" aria-label="Page 12">12</a></li>
-                        <li><a href="#" aria-label="Page 13">13</a></li>
-                        <li class="pagination-next"><a href="#" aria-label="Next page">Next</a></li>
+                        <?= $this->Paginator->first('<< ' . __('first')) ?>
+                        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                        <?= $this->Paginator->numbers() ?>
+                        <?= $this->Paginator->next(__('next') . ' >') ?>
+                        <?= $this->Paginator->last(__('last') . ' >>') ?>
                     </ul>
-                </nav>
+                    <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')], ["class"=>"pagination text-center"]) ?></p>
+                </div>
             </div>
 
         </div>

@@ -9,8 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Events Model
  *
- * @property \App\Model\Table\PhotosTable|\Cake\ORM\Association\BelongsTo $Photos
- * @property |\Cake\ORM\Association\BelongsTo $City
+ * @property \App\Model\Table\CityTable|\Cake\ORM\Association\BelongsTo $City
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsToMany $Users
  *
  * @method \App\Model\Entity\Event get($primaryKey, $options = [])
@@ -39,10 +38,6 @@ class EventsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Photos', [
-            'foreignKey' => 'photo_id',
-            'joinType' => 'INNER'
-        ]);
         $this->belongsTo('City', [
             'foreignKey' => 'city_id'
         ]);
@@ -52,29 +47,12 @@ class EventsTable extends Table
             'joinTable' => 'users_events'
         ]);
 
-        // Add the behaviour to your table
-        $this->addBehavior('Search.Search');
+        $this->addBehavior('Josegonzalez/Upload.Upload', [
+            'photo_url' => [
+                'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}'
+            ]
 
-        // Setup search filter using search manager
-        $this->searchManager()
-            ->value('author_id')
-            // Here we will alias the 'q' query param to search the `Articles.title`
-            // field and the `Articles.content` field, using a LIKE match, with `%`
-            // both before and after.
-            ->add('q', 'Search.Like', [
-                'before' => true,
-                'after' => true,
-                'fieldMode' => 'OR',
-                'comparison' => 'LIKE',
-                'wildcardAny' => '*',
-                'wildcardOne' => '?',
-                'field' => ['description', 'date']
-            ])
-            ->add('foo', 'Search.Callback', [
-                'callback' => function ($query, $args, $filter) {
-                    // Modify $query as required
-                }
-            ]);
+        ]);
     }
 
     /**
@@ -91,7 +69,7 @@ class EventsTable extends Table
 
         $validator
             ->scalar('description')
-            ->maxLength('description', 255)
+            ->maxLength('description', 130)
             ->requirePresence('description', 'create')
             ->notEmpty('description');
 
@@ -117,6 +95,13 @@ class EventsTable extends Table
             ->requirePresence('active', 'create')
             ->notEmpty('active');
 
+        $validator
+            ->scalar('direction')
+            ->maxLength('direction', 200)
+            ->requirePresence('direction', 'create')
+            ->notEmpty('direction');
+
+
         return $validator;
     }
 
@@ -129,7 +114,6 @@ class EventsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['photo_id'], 'Photos'));
         $rules->add($rules->existsIn(['city_id'], 'City'));
 
         return $rules;

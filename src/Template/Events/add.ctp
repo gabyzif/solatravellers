@@ -12,17 +12,19 @@
     </ul>
 </nav>
 <div class="articles form large-9 medium-8 columns content">
-    <?= $this->Form->create($event) ?>
+    <?= $this->Form->create($event,['type'=> 'file']) ?>
     <fieldset>
         <legend><?= __('Add Event') ?></legend>
         <?php
         echo $this->Form->control('name');
         echo $this->Form->control('description');
         echo $this->Form->control('long_description');
-        echo  $this->Form->control('photos[].url',
+        echo  $this->Form->control('photo_url',
             ['type' => 'file'],
             ['class' => 'form-control']);
         echo $this->Form->control('date');
+        echo $this->Form->control('direction');
+        echo $this->Form->control('city_id',['options' =>$citys]);
       //  echo $this->Form->control('users._ids', ['options' => $users]);
         ?>
 

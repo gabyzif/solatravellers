@@ -9,10 +9,10 @@
 
 </head>
 <body>
-    <?= $this->element('header') ?>
-    <div class="grid-x" id="main">
-        <?= $this->fetch('content') ?>
-    </div>
+<?= $this->element('header') ?>
+<div class="grid-x" id="main">
+    <?= $this->fetch('content') ?>
+</div>
 
 </body>
 

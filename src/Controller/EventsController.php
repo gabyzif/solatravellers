@@ -75,7 +75,6 @@ class EventsController extends AppController
 
 
             $events = $this->paginate($this->Events->find()
-                ->contain(["Photos"])
                 ->contain(["City"])
                 ->where(["city_id" => $city]));
 
@@ -85,7 +84,6 @@ class EventsController extends AppController
             $events = $this->paginate($this->Events
                 ->find()
                 ->contain(['City'])
-                ->contain(['Photos'])
                 ->where(['description IS NOT' => null]));
 
         }
@@ -100,7 +98,7 @@ class EventsController extends AppController
 
 
         $my_events= $this->UsersEvents->find()
-            ->contain(["Events"=>"Photos"])
+            ->contain(["Events"])
             ->contain(["Users"])
             ->where(["Users.id" => $this->User->id]);
 
@@ -132,7 +130,7 @@ class EventsController extends AppController
     public function search(){
 
         $this->loadModel('Users');
-        $this->loadModel('Photos');
+       // $this->loadModel('Photos');
         $this->loadModel('Citys');
 
         $city = $this->request->getQuery('city_id');
@@ -142,7 +140,6 @@ class EventsController extends AppController
 
         if(isset($city)){
             $event= $this->Events->find()
-                ->contain(["Photos"])
                 ->contain(["City"])
                 ->where(["city_id" => $city]);
         }
@@ -162,12 +159,12 @@ class EventsController extends AppController
 
         $this->loadModel('UsersEvents');
         $this->loadModel('Users');
-        $this->loadModel('Photos');
+      //  $this->loadModel('Photos');
         $this->loadModel('Citys');
 
 
         $event = $this->Events->get($id, [
-            'contain' => ['Photos', 'Users','City']
+            'contain' => ['Users','City']
         ]);
 
         $cant_users = $this->UsersEvents->find()
@@ -179,6 +176,12 @@ class EventsController extends AppController
             ->where(['event_id' => $event->id]);
 
 
+
+
+
+        $is_in_event=false;
+
+
         foreach ($users_events as $user_ev){
 
             if($user_ev->user_id==$this->User->id){
@@ -186,8 +189,6 @@ class EventsController extends AppController
 
 
             }
-
-            else { $is_in_event=false;}
 
 
         }
@@ -207,23 +208,23 @@ class EventsController extends AppController
      */
     public function add()
     {
-        $this->loadModel('Photos');
-
         $event = $this->Events->newEntity();
         if ($this->request->is('post')) {
-            $event = $this->Events->patchEntity($event, $this->request->getData(), ['associated' => 'Photos']);
+            $event = $this->Events->patchEntity($event, $this->request->getData());
 
             $event->active = true;
 
             if ($this->Events->save($event)) {
 
-                $this->Flash->success(__('The article has been saved.'));
+                $this->Flash->success(__('The event has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
-        $this->set(compact('event'));
+        $citys = $this->Events->City->find('list', [    'valueField' => 'name'
+        ]);
+        $this->set(compact('event', 'citys'));
     }
 
 

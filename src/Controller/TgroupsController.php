@@ -92,7 +92,8 @@ class TgroupsController extends AppController
 
         $conversations = $this->Conversations->find()
             ->contain("Tgroups")
-            ->contain("Users");
+            ->contain("Users")
+            ->limit(5);
 
         foreach ($conversations as $conv){
             $cant_users_conv[$conv->id] = $this->Conversations->find()
@@ -131,14 +132,15 @@ class TgroupsController extends AppController
 
         ]);
 
+
         $cant_users = $this->UserGroups->find()
             ->where(['group_id' => $tgroup->id])
             ->count();
 
-        $conversations = $this->Conversations->find()
+        $conversations =  $this->paginate($this->Conversations->find()
             ->contain("Tgroups")
             ->contain("Users")
-            ->where(["Conversations.tgroup_id" => $id]);
+            ->where(["Conversations.tgroup_id" => $id]));
 
         $users_group = $this->UserGroups->find()
             ->contain (["Users"])
