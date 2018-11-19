@@ -12,10 +12,8 @@
         </div>
 
         <input class="button expanded green-pink" type="submit" value="Sign in">
-        <input class="button expanded green" type="submit" value="Sign in with Facebook">
 
-        <a id="a-forgot" onclick="showHideForget()">Forgot your password?</a>
-        <p>Don't have an account? <a data-open="regisModal">Register</a></p>
+        <p>Don't have an account? <a href="../sesion/register">Register</a></p>
 
         <div id="forgot">
             <div class="floated-label-wrapper">

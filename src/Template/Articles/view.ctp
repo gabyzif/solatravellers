@@ -12,6 +12,8 @@
     <div class="individual-post">
         <h2><?=h($article->title)?></h2>
         <p class="date"><?= h($article->created) ?></p>
+        <?php if($User->type_of_account_id == 5) {?>
+
         <nav class="nav-article">
             <ul class="menu">
                 <li class="heading"><?= __('Actions') ?></li>
@@ -21,6 +23,7 @@
                 <li><?= $this->Html->link(__('New Article'), ['action' => 'add']) ?> </li>
             </ul>
         </nav>
+        <?php } ?>
 
         <?php foreach($article->photos as $imagen): ?>
             <img src="/images/Photos/url/<?= $imagen->url?>">

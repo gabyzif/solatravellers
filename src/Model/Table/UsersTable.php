@@ -67,34 +67,9 @@ class UsersTable extends Table
 
         $this->addBehavior('Josegonzalez/Upload.Upload', [
             'photo_url' => [
-                'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}',
-                'transformer' =>  function ($table, $entity, $data, $field, $settings) {
-                    $extension = pathinfo($data['name'], PATHINFO_EXTENSION);
+                'path' => 'webroot{DS}images{DS}{model}{DS}{field}{DS}'
+                    ]
 
-                    // Store the thumbnail in a temporary file
-                    $tmp = tempnam(sys_get_temp_dir(), 'upload') . '.' . $extension;
-
-                    // Use the Imagine library to DO THE THING
-                    $size = new \Imagine\Image\Box(40, 40);
-                    $mode = \Imagine\Image\ImageInterface::THUMBNAIL_INSET;
-                    $imagine = new \Imagine\Gd\Imagine();
-
-
-                    // Save that modified file to our temp file
-                    $imagine->open($data['tmp_name'])
-                        ->thumbnail($size, $mode)
-                        ->save($tmp);
-
-                    debug($imagine);
-                    die;
-
-                    // Now return the original *and* the thumbnail
-                    return [
-                        $data['tmp_name'] => $data['name'],
-                        $tmp => 'thumbnail-' . $data['name'],
-                    ];
-                },
-            ],
         ]);
     }
 

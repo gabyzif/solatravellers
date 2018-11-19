@@ -207,6 +207,8 @@ class EventsController extends AppController
      */
     public function add()
     {
+        $this->loadModel('Photos');
+
         $event = $this->Events->newEntity();
         if ($this->request->is('post')) {
             $event = $this->Events->patchEntity($event, $this->request->getData(), ['associated' => 'Photos']);

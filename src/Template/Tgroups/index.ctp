@@ -30,7 +30,6 @@
                 foreach ($my_groups as $my_group):?>
                     <div class=" small-12 medium-6 columns info-div">
                         <div class="info-avatar">
-                            <img class="avatar-small"  src="/images/Photos/url/<?= h($my_group->tgroup->photo->url) ?>" alt="">
                             <a class="div-name">
                                 <?php echo $my_group->tgroup->name ?>
                             </a>
@@ -63,7 +62,6 @@
         <div class="row section-div" >
             <div class="small-12 medium-6 columns info-div">
                 <div class="info-avatar">
-                    <img class="avatar-small"  src="/images/Photos/url/<?= h($tgroup->photo->url) ?>" alt="">
                 </div>
 
                 <div class="name-info">
@@ -89,6 +87,15 @@
 
                         Posts
                     </p>
+
+                    <p class="div-more-info">
+
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tgroup->id]) ?>
+                    </p>
+                    <p class="div-more-info">
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tgroup->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tgroup->id)]) ?>
+                    </p>
+
                 </div>
             </div>
 

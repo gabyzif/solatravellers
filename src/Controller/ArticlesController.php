@@ -68,6 +68,12 @@ class ArticlesController extends AppController
 
     public function add()
     {
+
+        /*if($this->User->type_of_account_id != 5){
+
+            $this->Auth->deny();
+
+        }*/
         $article = $this->Articles->newEntity();
         if ($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData(), ['associated' => 'Photos']);
