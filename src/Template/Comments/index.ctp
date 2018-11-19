@@ -21,6 +21,8 @@
                 <th scope="col"><?= $this->Paginator->sort('description') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('conversation_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('state') ?></th>
+
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -31,6 +33,8 @@
                 <td><?= h($comment->description) ?></td>
                 <td><?= $this->Number->format($comment->conversation_id) ?></td>
                 <td><?= $comment->has('user') ? $this->Html->link($comment->user->name, ['controller' => 'Users', 'action' => 'view', $comment->user->id]) : '' ?></td>
+                <td><?= h($comment->state) ?></td>
+
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $comment->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $comment->id]) ?>

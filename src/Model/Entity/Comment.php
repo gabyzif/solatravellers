@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property int $conversation_id
  * @property int $user_id
  * @property \Cake\I18n\FrozenDate $date
+ * @property string $state
  *
  * @property \App\Model\Entity\Conversation $conversation
  * @property \App\Model\Entity\User $user
@@ -32,6 +33,7 @@ class Comment extends Entity
         'conversation_id' => true,
         'user_id' => true,
         'date' => true,
+        'state' => true,
         'conversation' => true,
         'user' => true
     ];

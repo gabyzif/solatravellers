@@ -14,7 +14,26 @@
             <?php endif; ?>
         </ul>
 
+
+
     </nav>
+
+
+    <?php if (isset($User))
+    {
+        if($User->type_of_account_id == 5) {?>
+
+        <nav class="nav-article">
+            <ul class="menu">
+                <li><?= $this->Html->link(__('Comments'), ['action' => '../comments/index']) ?> </li>
+                <li><?= $this->Html->link(__('Events'), ['action' => '../events/index']) ?> </li>
+                <li><?= $this->Html->link(__('Groups'), ['action' => '../tgroups/index']) ?> </li>
+                <li><?= $this->Html->link(__('Conversations'), ['action' => '../conversations/index']) ?> </li>
+
+
+            </ul>
+        </nav>
+    <?php } }?>
 </div>
 
 <?php if(!isset($User)): ?>

@@ -8,7 +8,16 @@
                     <div class="article-row-section">
                         <div class="article-row-section-inner">
 
-                                <article class="article-row">
+                            <nav class="large-3 medium-4 columns" id="actions-sidebar">
+                                <?php if($User->type_of_account_id == 1) {?>
+                                <ul class="side-nav">
+                                    <li class="heading"><?= __('Actions') ?></li>
+                                    <li><?= $this->Html->link(__('List Comments'), ['action' => '../comments/index']) ?> </li>
+                                </ul>
+                                <?php } ?>
+                            </nav>
+
+                            <article class="article-row">
                                     <div class="article-row-content">
                                         <h3 class="article-row-content-header"><?php echo $conversation->Description?></h3>
 
@@ -19,7 +28,7 @@
                                     </div>
                                 </article>
 
-                            <?php foreach ($conversation->comments as $comment):?>
+                            <?php foreach ($comments as $comment):?>
 
                                 <article class="article-row">
                                     <div class="article-row-content">

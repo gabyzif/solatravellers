@@ -19,6 +19,7 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\ORM\Locator\TableLocator;
 use Cake\ORM\TableRegistry;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 
 /**

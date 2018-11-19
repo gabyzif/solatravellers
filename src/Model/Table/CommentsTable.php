@@ -71,6 +71,12 @@ class CommentsTable extends Table
             ->requirePresence('date', 'create')
             ->notEmpty('date');
 
+        $validator
+            ->scalar('state')
+            ->maxLength('state', 100)
+            ->requirePresence('state', 'create')
+            ->notEmpty('state');
+
         return $validator;
     }
 

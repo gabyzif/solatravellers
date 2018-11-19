@@ -70,10 +70,17 @@ class ConversationsController extends AppController
         $this->loadModel("Comments");
 
         $conversation = $this->Conversations->get($id,[
-            'contain'=>["Tgroups","Users","Comments"=>"Users"]]);
+            'contain'=>["Tgroups","Users","Comments"=>"Users"],
+            ]);
+
+
 
         $conversations = $this->Conversations->find()
-        ->where(["conversations.Id"=>$id])
+            ->where(["conversations.Id"=>$id])
+            ->contain(["Users"]);
+
+        $comments = $this->Comments->find()
+            ->where(["state"=>"ready"])
             ->contain(["Users"]);
 
         $is_in_conv = false;
@@ -90,7 +97,7 @@ class ConversationsController extends AppController
         $comment = $this->Comments->newEntity();
 
 
-        $this->set(compact('conversation','users','conversations','is_in_conv','id','comment'));
+        $this->set(compact('conversation','users','conversations','is_in_conv','id','comment','comments'));
     }
 
 
@@ -106,6 +113,7 @@ class ConversationsController extends AppController
 
 
             $comment->date= Time::now();
+            $comment->state="send";
 
             if ($this->Comments->save($comment)) {
 

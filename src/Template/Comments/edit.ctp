@@ -12,9 +12,16 @@
         <legend><?= __('Edit Comment') ?></legend>
         <?php
             echo $this->Form->control('description');
-            echo $this->Form->hidden('conversation_id', ['value' => $comment->id]);
+
+        if($User->type_of_account_id == 5){
+            echo $this->Form->control('state',['label'=>"State: ready, wrong, send"]);
+        }
+
+        echo $this->Form->hidden('conversation_id', ['value' => $comment->id]);
             echo $this->Form->hidden('user_id', ['value' => $User->id]);
         ?>
+
+
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
